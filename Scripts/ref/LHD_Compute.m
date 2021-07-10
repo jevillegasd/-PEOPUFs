@@ -133,22 +133,22 @@ function [mu, sigma] = LHD_Compute(lambda, all_data, mode, Looseness , names,tit
                 figure(it_out); clf,  hold on;
             % Plot baseline HD
                 subplot(num_cmp,4,(it-1)*4+1);
-                [xd,pd] = plotHD(hHDdata, 'Hamming Dist.'); grid on;
+                plotHD(hHDdata); grid on;
                 title(strcat(comment, ' - HD'));
                          
             % Plot euclidean distance  
                 subplot(num_cmp,4,(it-1)*4+2);
-                [xd,pd] = plotHD(L2data, 'l^2'); grid on;
+                plotHD(L2data, 'l^2'); grid on;
                 title(strcat(comment, ' - Euclidian Dist.'));
                 
             % Plot Loose HD    
                subplot(num_cmp,4,(it-1)*4+3);
-               [xd,pd] = plotHD(LHDdata, 'Hamming Dist.'); grid on;
+               plotHD(LHDdata, 'Hamming Dist.'); grid on;
                 title(sprintf('%s - Loose HD (%1.2f)', comment, Looseness));
               
             % Plot bitHD
                 subplot(num_cmp,4,(it-1)*4+4);
-                [xd,pd] = plotHD(HDdata, 'Hamming Dist.'); grid on;
+                plotHD(HDdata, 'Hamming Dist.'); grid on;
                 title(sprintf('%s - Bitwise HD', comment));
             end
         end

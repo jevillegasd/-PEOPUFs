@@ -1,7 +1,5 @@
 % HDdata = HD5;
-
-
-function h1 = plotHD(data, xlab, axis, print_label)%,comment)
+function h1 = plotHD(data, xlab, axis, print_label)
 
 if nargin <2, xlab ='Hamming Distance'; end
 if nargin <3, axis = [0 1]; end
