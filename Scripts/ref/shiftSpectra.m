@@ -1,3 +1,9 @@
+%Shifts the data on data2 to maximize its correlation with data1. Lambda is
+%the correspoding vector of wavelnegths at which the two datasets are
+%sampled and its used to return the cropped wavelength vector.
+
+% (C) 2021, Juan Esteban Villegas, NYUAD
+
 function [data1_s,data2_s, c_lambda] = shiftSpectra(data1,data2, lambda)
 
     data1 = data1-max(data1); %Normalization of the data is necessary for an accurate computation of the correlation
@@ -34,7 +40,4 @@ function [data1_s,data2_s, c_lambda] = shiftSpectra(data1,data2, lambda)
 
     R = corrcoef([data1 data2]);
     R_shift = corrcoef([data1_s data2_s]) ;  
-  
-    %plot([data1_s,data2_s]); 
-    %text(1000,-15,sprintf('r=%02f',R_shift(1,2)));
 end

@@ -1,4 +1,20 @@
-function [mu, sigma] = LHD_Compute(lambda, all_data, mode, Looseness , names,titles)
+%Computes distance metrics (ED and fractional Loose HD and BHD).
+%   LHD_Compute(lambda, all_data, mode, L) copmputes the metrics
+%   for the spectrum in 'all_data' with a common wavelength axis lambda,
+%   and using a degree of looseness L to compute the fractional LHD. Any
+%   other parameter necessary to change for the computations needs to be
+%   modified in this script directly. all_data is a matrix where each
+%   column is the transmission amplitude obtained from a spectral
+%   mesaurement.
+%   When mode = 'all', all input columns in the matrix are processed with
+%   reference to the first measurement in the set (this can be changed 
+%   modifying the parameter cmp), for mode = 'pairwise' the each one of the
+%   sets in all_data is compared with each other (all_data needs to be a 
+%   cell array where each of its components its a matrix same sizes).
+
+% (C) 2021, Juan Esteban Villegas, NYUAD
+
+function [mu, sigma] = LHD_Compute(lambda, all_data, mode, looseness , names,titles)
     plot = 1;
     if nargin < 5
         names = [''];
@@ -14,6 +30,7 @@ function [mu, sigma] = LHD_Compute(lambda, all_data, mode, Looseness , names,tit
     numbits = 2;
     spacing = 1; 
     ignoreend = 5;
+    cmp = 1; %Reference measurement we are comapring to
     
     % For bitwise HD calculation, we extract numbits bits from the
     % amplitude at specific wavelengths. To built the key we extract from
@@ -33,7 +50,7 @@ function [mu, sigma] = LHD_Compute(lambda, all_data, mode, Looseness , names,tit
         add= add+1;
     end
     sample_size = sample_size+add;
-    L = round(Looseness*normalization_scale);
+    L = round(looseness*normalization_scale);
     dx = lambda(2)-lambda(1); 
     
     %We first increase the sample size to make sure that the total length
@@ -51,7 +68,6 @@ function [mu, sigma] = LHD_Compute(lambda, all_data, mode, Looseness , names,tit
         
         processed_raw = zeros(sample_size, size(data,2));
        
-        
         % Generate all subsampled responses
         for it = 1:size(data,2)
             cdata = data(:,it);
@@ -95,7 +111,7 @@ function [mu, sigma] = LHD_Compute(lambda, all_data, mode, Looseness , names,tit
         for it = 1:num_cmp
             HDdata = zeros(num_tests,1);
             L2data = HDdata; hHDdata = HDdata; LHDdata = HDdata;
-            cmp = 1; %Reference measurement we are comapring to
+            
             
             if strcmp(mode,'all') 
                 data_ref = processed_raw(:,cmp); % Each column is one sample from the keyset
@@ -144,7 +160,7 @@ function [mu, sigma] = LHD_Compute(lambda, all_data, mode, Looseness , names,tit
             % Plot Loose HD    
                subplot(num_cmp,4,(it-1)*4+3);
                plotHD(LHDdata, 'Hamming Dist.'); grid on;
-                title(sprintf('%s - Loose HD (%1.2f)', comment, Looseness));
+                title(sprintf('%s - Loose HD (%1.2f)', comment, looseness));
               
             % Plot bitHD
                 subplot(num_cmp,4,(it-1)*4+4);

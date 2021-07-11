@@ -1,3 +1,5 @@
+% (C) 2021, Juan Esteban Villegas, NYUAD
+
 function [data1_s,data2_s] = shiftSpectra_int(data1,data2)
     xcorr_N = 1000;
 

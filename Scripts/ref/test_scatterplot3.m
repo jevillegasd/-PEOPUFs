@@ -1,3 +1,5 @@
+% (C) 2021, Juan Esteban Villegas, NYUAD
+
 clf, hold off;
 h(1) = polarscatter3(angles2(:,1)*2,angles2(:,2)*2,resTM(:,3),...
     'x','Color','r','MarkerSize',4,'DisplayName','HD to TM response');

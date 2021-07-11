@@ -1,3 +1,10 @@
+%Plots a 3d scatter plot in polar coordinates.
+
+% (C) 2021, Juan Esteban Villegas, NYUAD
+% Based on work by Alabi Bojesomo, NYUAD, 2020
+% and shared in https://github.com/DfX-NYUAD/peo-PUF
+% The GNU General Public License v3.0 apply for this and any derived code.
+
 function h = polarscatter3(theta,phi,rho, varargin )
     maxr=0.7; stepr = 0.1;
     %if nargin>2, maxr = max(max(rho),maxr); end

@@ -1,12 +1,13 @@
+%Computes HD metrics for a pair of measurements
+%   For bitwise HD calculation, we extract numbits bits from the amplitude
+%   at specific wavelengths. To built the key we extract from this data len
+%   number of bits at a random position, in the case len> numbits, the key
+%   blocks will combine several consecutive responses until building a
+%   block of size len.
+
+%   (C) 2021, Juan Esteban Villegas, NYUAD
+
 function dist = measure_distance(data_ref,data_sam,L, len, numbits, spacing, ignoreend)
-    % Computes HD metrics for a pair of measurements
-    
-    % For bitwise HD calculation, we extract numbits bits from the
-    % amplitude at specific wavelengths. To built the key we extract from
-    % this data len number of bits at a random position, in the case len> numbits,
-    % the key blocks will combine several consecutive responses until
-    % building a block of size len. 
-    
     if nargin < 6
         len =2 ;            % Bitlength of the key individual CRPs groups. 
         numbits = 2;        % Size in bits of the extracted features.
@@ -15,12 +16,6 @@ function dist = measure_distance(data_ref,data_sam,L, len, numbits, spacing, ign
     
     key_size = 128;     %Size in bits of the generated CRP grouped as response.
     
-    %input_ref = input_ref - max(input_ref);
-    %input_sam = input_sam - max(input_sam);
-    
-    %data_ref = data_filter(input_ref, dx, w , sample_size, normalization_scale);
-    %data_sam = data_filter(input_sam, dx, w , sample_size, normalization_scale);
-
     binary = getKey(data_ref,numbits,spacing,ignoreend);
     cell_key_ref = cell2mat({binary}); 
     binary = getKey(data_sam,numbits,spacing,ignoreend);

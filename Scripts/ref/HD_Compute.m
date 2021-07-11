@@ -1,3 +1,8 @@
+% (C) 2021, Juan Esteban Villegas, NYUAD
+% Based on work by Alabi Bojesomo, NYUAD, 2020
+% and shared in https://github.com/DfX-NYUAD/peo-PUF
+% The GNU General Public License v3.0 apply for this and any derived code.
+
 function results = HD_Compute(lambda, all_data, cmp, numbits, len, names,titles)
     %cmp = 4;            % Reference measurement for HD computation
     %len = 3;            % Bitlength of the key responses. 
@@ -24,7 +29,7 @@ function results = HD_Compute(lambda, all_data, cmp, numbits, len, names,titles)
         % Generate all key responses for the device (subsampled )
         for it = 1:size(data,2)
             cdata = data(:,it);
-            w = 0.05e-9;  % Width of the sech filtering function in nm
+            w = 0.02e-9;  % Width of the sech filtering function in nm
 
             processed_raw(:,it) = data_filter(cdata, dx, w , sample_size, 32);
             binary = getKey(processed_raw(:,it),numbits,1,1);

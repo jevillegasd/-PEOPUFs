@@ -1,3 +1,5 @@
+%Read an h5 file and trasnforms it into a matlab structure.
+% (C) 2021, Juan Esteban Villegas, NYUAD
 function struct = h52struct(file, loc)
     if nargin == 1, loc = '/'; end
     isStructArray = 0;

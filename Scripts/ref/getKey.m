@@ -1,29 +1,22 @@
-function key = getKey(data,len,spacing, ignoreend)
-%data : spectral power data to get keys from
-%len : [6] length of bits per instance
-%spacing : {[1],2}      Spacing between extracted bits
 %This function extract len number of bits from the most significant bits of
 %the value stored in data.
-%Original Version: Github
-%Modified by J.Villegas, May 2021
+%   data    : spectral power data to get keys from
+%   len     : [6] length of bits per instance
+%   spacing : {[1],2}      Spacing between extracted bits
 
+% (C) 2021, Juan Esteban Villegas, NYUAD
+% Based on work by Alabi Bojesomo, NYUAD, 2020
+% and shared in https://github.com/DfX-NYUAD/peo-PUF
+% The GNU General Public License v3.0 apply for this and any derived code.
+
+function key = getKey(data,len,spacing, ignoreend)
     if ~exist('len','var')
         len = 6;
     end
 
-    if ~exist('spacing','var')
-        spacing = 1;
-    end
-    if ~exist('ignoreend','var')
-        ignoreend = 0;
-    end
+    if ~exist('spacing','var'),         spacing = 1;    end
+    if ~exist('ignoreend','var'),       ignoreend = 0;    end
 
-    
-%     gCode = dec2bin(bitshift(data,-1));     %Remove the LSB (sort of High Pass  filter)
-%     m = max(data);                          %Maximum value in the data vector
-%     MSB = nextpow2(m);                      %Length in bits of that value
-% 
-    
     binCode = dec2bin(data);
     s = size(binCode,2);
     gCode = bin2gray(binCode);            %Transform into Gray Code

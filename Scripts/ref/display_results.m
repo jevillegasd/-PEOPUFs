@@ -1,3 +1,7 @@
+%Formats and prints a table with means and standard deviations for distance
+%metrics (ED, LHD and BHD).
+
+% (C) 2021, Juan Esteban Villegas, NYUAD
 function tout = display_results(avg, sigma)
 
     metrics = {'ED';'LHD';'BHD'}; clear out;

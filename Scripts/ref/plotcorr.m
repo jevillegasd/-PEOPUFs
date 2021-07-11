@@ -1,4 +1,6 @@
-%Plot correlation cofficients
+% Generates a color plot for a matrix of cross correlation cofficients.
+
+% (C) 2021, Juan Esteban Villegas, NYUAD
 
 function plotcorr(A)
     imagesc(A)

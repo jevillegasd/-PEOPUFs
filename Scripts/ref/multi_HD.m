@@ -1,9 +1,11 @@
-function results = multi_HD(lambda, dataset, Looseness)
-%This functions carries the correlation correction and returns teh concatenated 
-%metrics with and without correcting .
+%This functions carries the correlation correction and returns the
+%concatenated metrics with and without correcting .
 
+% (C) 2021, Juan Esteban Villegas, NYUAD
+
+function results = multi_HD(lambda, dataset, Looseness)
     dx = lambda(2)-lambda(1); 
-    w = 0.02e-9;  % Width of the sech filtering function in nm
+    w = 0.05e-9;  % Width of the sech filtering function in nm
     normalization_scale = 2^8-1; %Maximum value of the normalized spectra.
     L = Looseness*normalization_scale;
        
@@ -39,8 +41,8 @@ function results = multi_HD(lambda, dataset, Looseness)
         cdata_ref = dataset(:,IDX(it,1)); cdata_ref = cdata_ref-max(cdata_ref);
         cdata_sam = dataset(:,IDX(it,2)); cdata_sam = cdata_sam-max(cdata_sam);
         
-        data_ref = data_filter(cdata_ref, dx, w , sample_size, normalization_scale);
-        data_sam = data_filter(cdata_sam, dx, w , sample_size, normalization_scale);
+        data_ref = filter_conv(cdata_ref, dx, w , sample_size, normalization_scale);
+        data_sam = filter_conv(cdata_sam, dx, w , sample_size, normalization_scale);
         
         [data_ref_s, data_sam_s] = shiftSpectra_int(data_ref,data_sam);
         cut = mod(length(data_ref_s),len);  %Crop the dataset to be divisible by len
@@ -49,9 +51,6 @@ function results = multi_HD(lambda, dataset, Looseness)
         
         dist = measure_distance(data_ref  ,data_sam   , L,  len, numbits, spacing, ignoreend);
         dist2 = measure_distance(data_ref_s,data_sam_s, L,  len, numbits, spacing, ignoreend);
-
-        %dist = measure_distance(cdata_ref,cdata_sam, L , dx, w);
-        %dist2 = measure_distance(data_ref_s,data_sam_s, L, dx, w);
         
         L2data (:,it) = dist(:,1);
         hHDdata(:,it) = dist(:,2);
